@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ArrowUp, Mail, Phone } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '@/components/ui/Icons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/ui/Icons';
 import { PROFILE } from '@/data/portfolio-data';
 
 export default function Footer() {
@@ -74,6 +74,16 @@ export default function Footer() {
                 title="LinkedIn"
               >
                 <LinkedinIcon className="w-4 h-4" />
+              </a>
+              <a
+                href={PROFILE.contact.instagram}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram Profile (opens in new tab)"
+                className="w-10 h-10 rounded-xl bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#ff4572] focus-visible:ring-2 focus-visible:ring-[#ff4572] focus-visible:outline-none text-[#e1bfb8] hover:text-[#ff4572] flex items-center justify-center transition-all"
+                title="Instagram"
+              >
+                <InstagramIcon className="w-4 h-4" />
               </a>
               <a
                 href={PROFILE.contact.gmailComposeUrl}

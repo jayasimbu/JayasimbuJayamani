@@ -14,7 +14,7 @@ import {
   Loader2,
   ExternalLink,
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '@/components/ui/Icons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/ui/Icons';
 import { PROFILE } from '@/data/portfolio-data';
 
 interface ContactSectionProps {
@@ -221,6 +221,16 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
                   title="LinkedIn"
                 >
                   <LinkedinIcon className="w-5 h-5" />
+                </a>
+                <a
+                  href={PROFILE.contact.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram Profile (opens in new tab)"
+                  className="w-11 h-11 rounded-xl bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#ff4572] hover:bg-[#41312e] focus-visible:ring-2 focus-visible:ring-[#ff4572] focus-visible:outline-none transition-all"
+                  title="Instagram"
+                >
+                  <InstagramIcon className="w-5 h-5" />
                 </a>
                 <a
                   href={PROFILE.contact.hackerrank}

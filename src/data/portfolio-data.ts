@@ -97,6 +97,7 @@ export const PROFILE = {
     location: 'Dharmapuri, Tamil Nadu, India',
     github: 'https://github.com/jayasimbu',
     linkedin: 'https://linkedin.com/in/jayasimbu-jayamani-51b1b42a1',
+    instagram: 'https://www.instagram.com/jayasimbu45?lqvp=MXR1b3hiNXV2cnNtYw==',
     hackerrank: 'https://hackerrank.com/profile/jayasimbu',
   },
 };
@@ -105,7 +106,7 @@ export const HIGHLIGHTS = [
   {
     icon: 'GraduationCap',
     title: 'BE CSE Graduate – 2026',
-    desc: 'Sri Shanmugha College of Engineering and Technology (CGPA: 7.3)',
+    desc: 'Sri Shanmugha College of Engineering and Technology (CGPA: 7.6)',
   },
   {
     icon: 'Layers',
@@ -130,10 +131,10 @@ export const HIGHLIGHTS = [
 ];
 
 export const STATS = [
-  { value: '3', label: 'Featured Projects' },
+  { value: '5+', label: 'Featured Projects' },
   { value: 'BE CSE', label: '2026 Graduate' },
-  { value: '7.3', label: 'College CGPA' },
-  { value: '5+', label: 'Technologies Used' },
+  { value: '7.6', label: 'College CGPA' },
+  { value: '15+', label: 'Technologies Used' },
 ];
 
 export const PROJECTS: Project[] = [
@@ -405,7 +406,7 @@ export const EDUCATION: EducationItem[] = [
     degree: 'Bachelor of Engineering — Computer Science and Engineering',
     institution: 'Sri Shanmugha College of Engineering and Technology, Sankari, Salem',
     period: '2022 – 2026',
-    score: 'CGPA: 7.3',
+    score: 'CGPA: 7.6',
     details:
       'Hands-on computer science foundation covering Data Structures, Algorithms, Object-Oriented Programming, Database Systems, Web Development, and Artificial Intelligence.',
   },

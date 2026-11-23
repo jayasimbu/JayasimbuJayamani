@@ -15,7 +15,7 @@ import {
   GraduationCap,
   Award,
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '@/components/ui/Icons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/ui/Icons';
 import { PROFILE, STATS } from '@/data/portfolio-data';
 
 interface HeroSectionProps {
@@ -123,48 +123,60 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
             </div>
 
             {/* Social Links */}
-            <div className="pt-2 flex items-center justify-center lg:justify-start gap-3">
-              <span className="text-xs font-['JetBrains_Mono'] text-[#a88a83]">PROFILES:</span>
+            <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-3.5">
+              <span className="text-xs sm:text-sm font-['JetBrains_Mono'] font-bold text-[#f6ddd8] tracking-wider uppercase">
+                PROFILES:
+              </span>
               <a
                 href={PROFILE.contact.github}
                 target="_blank"
                 rel="noreferrer"
-                className="w-11 h-11 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all"
+                className="w-12 h-12 sm:w-[48px] sm:h-[48px] rounded-2xl bg-[#352723] border border-[#59413c]/60 flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:border-[#ff6b4a] hover:bg-[#41312e] hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all shadow-md"
                 title="GitHub Profile (opens in new tab)"
                 aria-label="GitHub Profile"
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </a>
               <a
                 href={PROFILE.contact.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="w-11 h-11 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#7bd0ff] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7bd0ff] transition-all"
+                className="w-12 h-12 sm:w-[48px] sm:h-[48px] rounded-2xl bg-[#352723] border border-[#59413c]/60 flex items-center justify-center text-[#e1bfb8] hover:text-[#7bd0ff] hover:border-[#7bd0ff] hover:bg-[#41312e] hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7bd0ff] transition-all shadow-md"
                 title="LinkedIn Profile (opens in new tab)"
                 aria-label="LinkedIn Profile"
               >
-                <LinkedinIcon className="w-4 h-4" />
+                <LinkedinIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href={PROFILE.contact.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="w-12 h-12 sm:w-[48px] sm:h-[48px] rounded-2xl bg-[#352723] border border-[#59413c]/60 flex items-center justify-center text-[#e1bfb8] hover:text-[#ff4572] hover:border-[#ff4572] hover:bg-[#41312e] hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4572] transition-all shadow-md"
+                title="Instagram Profile (opens in new tab)"
+                aria-label="Instagram Profile"
+              >
+                <InstagramIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </a>
               <a
                 href={PROFILE.contact.hackerrank}
                 target="_blank"
                 rel="noreferrer"
-                className="px-3.5 h-11 rounded-full bg-[#352723] flex items-center gap-1.5 text-xs font-['JetBrains_Mono'] text-[#e1bfb8] hover:text-[#56d9d8] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#56d9d8] transition-all"
+                className="h-12 sm:h-[48px] px-4 rounded-2xl bg-[#352723] border border-[#59413c]/60 flex items-center gap-2 text-xs sm:text-sm font-['JetBrains_Mono'] text-[#e1bfb8] hover:text-[#56d9d8] hover:border-[#56d9d8] hover:bg-[#41312e] hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#56d9d8] transition-all shadow-md"
                 title="HackerRank Profile (opens in new tab)"
                 aria-label="HackerRank Profile"
               >
-                <span className="font-bold text-[#56d9d8]">H</span>
+                <span className="font-bold text-sm sm:text-base text-[#56d9d8]">H</span>
                 <span>HackerRank</span>
               </a>
               <a
                 href={PROFILE.contact.gmailComposeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="w-11 h-11 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all"
+                className="w-12 h-12 sm:w-[48px] sm:h-[48px] rounded-2xl bg-[#352723] border border-[#59413c]/60 flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:border-[#ff6b4a] hover:bg-[#41312e] hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all shadow-md"
                 title="Email via Gmail Compose"
                 aria-label="Email via Gmail Compose"
               >
-                <Mail className="w-4 h-4" />
+                <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
               </a>
             </div>
           </motion.div>
