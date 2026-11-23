@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -18,11 +19,26 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (project) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [project, onClose]);
+
   if (!project) return null;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
+      >
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -49,7 +65,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   FEATURED PROJECT
                 </span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] text-[#f6ddd8]">
+              <h3 id="project-modal-title" className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] text-[#f6ddd8]">
                 {project.title}
               </h3>
               <p className="text-sm font-['JetBrains_Mono'] text-[#ffb4a3] mt-1">
@@ -59,8 +75,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723] transition-colors cursor-pointer"
-              aria-label="Close modal"
+              className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-lg text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-colors cursor-pointer"
+              aria-label="Close modal (Escape)"
             >
               <X className="w-5 h-5" />
             </button>

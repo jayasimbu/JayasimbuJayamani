@@ -27,15 +27,17 @@ export default function SkillsSection({ skillCategories = SKILL_CATEGORIES }: Sk
     'Frontend Development': Layout,
     'Backend Development': Server,
     'Databases': Database,
+    'Cloud & Tools': Wrench,
+    'AI & Machine Learning': Brain,
     'Artificial Intelligence': Brain,
     'UI/UX & Design': Palette,
     'Development Tools': Wrench,
   };
 
   const accentPalette = [
-    { iconBg: 'bg-[#ff6b4a]/10 text-[#ff6b4a]', bar: 'bg-[#ff6b4a]', text: 'text-[#ff6b4a]' },
-    { iconBg: 'bg-[#7bd0ff]/10 text-[#7bd0ff]', bar: 'bg-[#7bd0ff]', text: 'text-[#7bd0ff]' },
-    { iconBg: 'bg-[#56d9d8]/10 text-[#56d9d8]', bar: 'bg-[#56d9d8]', text: 'text-[#56d9d8]' },
+    { iconBg: 'bg-[#ff6b4a]/10 text-[#ff6b4a]' },
+    { iconBg: 'bg-[#7bd0ff]/10 text-[#7bd0ff]' },
+    { iconBg: 'bg-[#56d9d8]/10 text-[#56d9d8]' },
   ];
 
   const categories = ['All', ...skillCategories.map((c) => c.name)];
@@ -62,12 +64,14 @@ export default function SkillsSection({ skillCategories = SKILL_CATEGORIES }: Sk
         </motion.div>
 
         {/* Interactive Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-12" role="tablist" aria-label="Filter skills by category">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-['JetBrains_Mono'] transition-all cursor-pointer ${
+              role="tab"
+              aria-selected={activeCategory === cat}
+              className={`px-4 py-2 min-h-[40px] rounded-full text-xs font-['JetBrains_Mono'] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1d100e] ${
                 activeCategory === cat
                   ? 'bg-[#ff6b4a] text-[#661000] font-semibold shadow-md shadow-[#ff6b4a]/20'
                   : 'bg-[#2a1c19] text-[#e1bfb8] border border-[#59413c]/40 hover:border-[#ffb4a3] hover:text-[#f6ddd8]'
@@ -97,7 +101,7 @@ export default function SkillsSection({ skillCategories = SKILL_CATEGORIES }: Sk
                   <div>
                     <div className="flex items-center gap-3 mb-5">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${palette.iconBg}`}>
-                        <IconComp className="w-5 h-5" />
+                        <IconComp className="w-5 h-5" aria-hidden="true" />
                       </div>
                       <div>
                         <h3 className="font-['Space_Grotesk'] text-[17px] font-semibold text-[#f6ddd8]">
@@ -109,31 +113,18 @@ export default function SkillsSection({ skillCategories = SKILL_CATEGORIES }: Sk
                       </div>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2">
                       {group.skills.map((skill) => (
-                        <div key={skill.name}>
-                          <div className="flex justify-between items-center mb-1.5">
-                            <span className="text-sm text-[#e1bfb8]">{skill.name}</span>
-                            <div className="flex items-center gap-2">
-                              {skill.badge && (
-                                <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded-full bg-[#352723] text-[#e1bfb8]">
-                                  {skill.badge}
-                                </span>
-                              )}
-                              <span className={`font-['JetBrains_Mono'] text-[11px] font-medium ${palette.text}`}>
-                                {skill.level}%
-                              </span>
-                            </div>
-                          </div>
-                          <div className="w-full h-1.5 bg-[#352723] rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${skill.level}%` }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 0.9, ease: 'easeOut' }}
-                              className={`h-full rounded-full ${palette.bar}`}
-                            />
-                          </div>
+                        <div
+                          key={skill.name}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#261815] border border-[#59413c]/35 hover:border-[#ff6b4a]/40 transition-colors"
+                        >
+                          <span className="text-xs sm:text-sm text-[#f6ddd8] font-medium">{skill.name}</span>
+                          {skill.badge && (
+                            <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded-full bg-[#352723] text-[#e1bfb8] border border-[#59413c]/30">
+                              {skill.badge}
+                            </span>
+                          )}
                         </div>
                       ))}
                     </div>

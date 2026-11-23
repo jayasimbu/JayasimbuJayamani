@@ -21,7 +21,7 @@ export interface Project {
 
 export interface Skill {
   name: string;
-  level: number; // 0-100
+  level?: number; // kept for DB backward compat; not rendered as percentage
   category?: string;
   badge?: string;
 }
@@ -130,10 +130,10 @@ export const HIGHLIGHTS = [
 ];
 
 export const STATS = [
-  { value: '3+', label: 'AI Flagship Projects' },
-  { value: '100%', label: 'Full-Stack Ready' },
-  { value: '2026', label: 'BE CSE Graduate' },
+  { value: '3', label: 'Featured Projects' },
+  { value: 'BE CSE', label: '2026 Graduate' },
   { value: '7.3', label: 'College CGPA' },
+  { value: '5+', label: 'Technologies Used' },
 ];
 
 export const PROJECTS: Project[] = [
@@ -148,7 +148,7 @@ export const PROJECTS: Project[] = [
     techStack: ['React.js', 'FastAPI', 'Python', 'MongoDB', 'Ollama'],
     isFeatured: true,
     githubUrl: 'https://github.com/jayasimbu/LINKUP',
-    liveUrl: 'https://github.com/jayasimbu/LINKUP',
+    liveUrl: undefined,
     contribution:
       'Designed and developed the full-stack application, integrating frontend interfaces, backend APIs, database functionality, and locally hosted AI capabilities.',
     features: [
@@ -175,7 +175,7 @@ export const PROJECTS: Project[] = [
     techStack: ['Python', 'React.js', 'FastAPI', 'LLaVA', 'EasyOCR', 'Supabase'],
     isFeatured: true,
     githubUrl: 'https://github.com/jayasimbu/vlm_llava_project',
-    liveUrl: 'https://github.com/jayasimbu/vlm_llava_project',
+    liveUrl: undefined,
     contribution:
       'Developed the full-stack document intelligence application, integrating OCR, vision-language model capabilities, API services, frontend interfaces, and invoice data management.',
     features: [
@@ -203,7 +203,7 @@ export const PROJECTS: Project[] = [
     techStack: ['React.js', 'TypeScript', 'Supabase', 'Google Gemini AI'],
     isFeatured: true,
     githubUrl: 'https://github.com/jayasimbu/MyFitnessHub',
-    liveUrl: 'https://github.com/jayasimbu/MyFitnessHub',
+    liveUrl: undefined,
     contribution:
       'Developed the fitness application using React.js and TypeScript, integrated Supabase backend services, and implemented AI-powered features using Google Gemini.',
     features: [
@@ -264,7 +264,18 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     ],
   },
   {
-    name: 'Artificial Intelligence',
+    name: 'Cloud & Tools',
+    icon: 'Wrench',
+    skills: [
+      { name: 'Git', level: 88, badge: 'Version Control' },
+      { name: 'GitHub', level: 90, badge: 'Collaboration' },
+      { name: 'VS Code', level: 95, badge: 'Primary IDE' },
+      { name: 'Vercel', level: 85, badge: 'Deployment' },
+      { name: 'Postman', level: 85, badge: 'API Testing' },
+    ],
+  },
+  {
+    name: 'AI & Machine Learning',
     icon: 'Brain',
     skills: [
       { name: 'Ollama', level: 85, badge: 'Local LLMs' },
@@ -286,15 +297,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Visily AI', level: 82, badge: 'Wireframing' },
       { name: 'Wireframing', level: 85, badge: 'UX Flow' },
       { name: 'Prototyping', level: 85, badge: 'Interactive' },
-    ],
-  },
-  {
-    name: 'Development Tools',
-    icon: 'Wrench',
-    skills: [
-      { name: 'Git', level: 88, badge: 'Version Control' },
-      { name: 'GitHub', level: 90, badge: 'Collaboration' },
-      { name: 'VS Code', level: 95, badge: 'Primary IDE' },
     ],
   },
 ];

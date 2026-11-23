@@ -108,24 +108,26 @@ export default function ProjectsSection({ projects = PROJECTS }: ProjectsSection
                     </p>
 
                     {/* Actions */}
-                    <div className="flex flex-wrap items-center gap-4 pt-1">
+                    <div className="flex flex-wrap items-center gap-3 pt-1">
                       <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className={`inline-flex items-center gap-2 ${accentText} ${linkHover} transition-colors font-medium text-sm`}
+                        className={`inline-flex items-center gap-2 px-4 py-2 min-h-[40px] rounded-full ${accentText} ${linkHover} border border-transparent hover:border-[#59413c]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all font-medium text-sm`}
+                        aria-label={`View ${project.title} repository on GitHub (opens in new tab)`}
                       >
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink className="w-4 h-4" aria-hidden="true" />
                         <span>View on GitHub</span>
                       </a>
 
                       <button
                         onClick={() => setSelectedProject(project)}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-['JetBrains_Mono'] text-[#f6ddd8] bg-[#352723] border border-[#59413c]/50 hover:border-[#ffb4a3] transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 min-h-[40px] rounded-full text-xs font-['JetBrains_Mono'] text-[#f6ddd8] bg-[#352723] border border-[#59413c]/50 hover:border-[#ffb4a3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffb4a3] transition-colors cursor-pointer"
+                        aria-label={`Explore ${project.title} architecture details`}
                       >
-                        <Sparkles className="w-3.5 h-3.5 text-[#ffb4a3]" />
+                        <Sparkles className="w-3.5 h-3.5 text-[#ffb4a3]" aria-hidden="true" />
                         <span>Explore Architecture</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
+                        <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                       </button>
                     </div>
                   </div>

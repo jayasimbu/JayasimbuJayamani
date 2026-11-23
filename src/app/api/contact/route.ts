@@ -8,13 +8,18 @@ interface ContactPayload {
   message?: string;
 }
 
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_SUBJECT_LENGTH = 200;
+const MAX_MESSAGE_LENGTH = 2000;
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as ContactPayload;
-    const name = body.name?.trim() || '';
-    const email = body.email?.trim() || '';
-    const subject = body.subject?.trim() || 'General Inquiry';
-    const message = body.message?.trim() || '';
+    const name = body.name?.trim().slice(0, MAX_NAME_LENGTH) || '';
+    const email = body.email?.trim().slice(0, MAX_EMAIL_LENGTH) || '';
+    const subject = body.subject?.trim().slice(0, MAX_SUBJECT_LENGTH) || 'General Inquiry';
+    const message = body.message?.trim().slice(0, MAX_MESSAGE_LENGTH) || '';
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -46,7 +51,7 @@ export async function POST(req: Request) {
       {
         ok: true,
         id: result.insertedId.toString(),
-        message: 'Inquiry saved to MongoDB successfully.',
+        message: 'Inquiry saved successfully. Jayasimbu will review your message soon.',
       },
       { status: 201 }
     );

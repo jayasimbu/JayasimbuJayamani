@@ -58,7 +58,7 @@ export default function PhilosophySection() {
         </motion.div>
 
         {/* 5 Pillars */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
           {PHILOSOPHY.principles.map((p, idx) => {
             const Icon = iconList[idx] || Sparkles;
             const colorClass = iconColors[idx % iconColors.length];

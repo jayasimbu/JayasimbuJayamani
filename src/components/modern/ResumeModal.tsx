@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -28,6 +28,16 @@ interface ResumeModalProps {
 
 export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -75,7 +85,12 @@ ${CERTIFICATIONS.map((c) => `* ${c.title} - ${c.issuer} (${c.type})`).join('\n')
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="resume-modal-title"
+      >
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -97,7 +112,7 @@ ${CERTIFICATIONS.map((c) => `* ${c.title} - ${c.issuer} (${c.type})`).join('\n')
               <div className="w-8 h-8 rounded-lg bg-[#ff6b4a]/15 flex items-center justify-center text-[#ff6b4a]">
                 <FileText className="w-4 h-4" />
               </div>
-              <span className="text-xs sm:text-sm font-['Space_Grotesk'] font-semibold text-[#f6ddd8]">
+              <span id="resume-modal-title" className="text-xs sm:text-sm font-['Space_Grotesk'] font-semibold text-[#f6ddd8]">
                 RESUME PREVIEW — JAYASIMBU JAYAMANI
               </span>
             </div>
@@ -105,7 +120,7 @@ ${CERTIFICATIONS.map((c) => `* ${c.title} - ${c.issuer} (${c.type})`).join('\n')
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] text-[#f6ddd8] bg-[#352723] border border-[#59413c] hover:border-[#ff6b4a] transition-all cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 min-h-[38px] rounded-full text-xs font-['JetBrains_Mono'] text-[#f6ddd8] bg-[#352723] border border-[#59413c] hover:border-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-all cursor-pointer"
                 title="Print or Save as PDF"
               >
                 <Printer className="w-3.5 h-3.5 text-[#ff6b4a]" />
@@ -114,7 +129,7 @@ ${CERTIFICATIONS.map((c) => `* ${c.title} - ${c.issuer} (${c.type})`).join('\n')
 
               <button
                 onClick={handleCopyText}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] text-[#f6ddd8] bg-[#352723] border border-[#59413c] hover:border-[#56d9d8] transition-all cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 min-h-[38px] rounded-full text-xs font-['JetBrains_Mono'] text-[#f6ddd8] bg-[#352723] border border-[#59413c] hover:border-[#56d9d8] focus-visible:ring-2 focus-visible:ring-[#56d9d8] focus-visible:outline-none transition-all cursor-pointer"
                 title="Copy Resume as Text"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-[#56d9d8]" /> : <Copy className="w-3.5 h-3.5 text-[#56d9d8]" />}
@@ -123,7 +138,7 @@ ${CERTIFICATIONS.map((c) => `* ${c.title} - ${c.issuer} (${c.type})`).join('\n')
 
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723] transition-colors cursor-pointer"
+                className="min-w-[38px] min-h-[38px] flex items-center justify-center rounded-lg text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-colors cursor-pointer"
                 aria-label="Close resume preview"
               >
                 <X className="w-5 h-5" />

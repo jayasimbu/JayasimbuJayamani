@@ -323,7 +323,7 @@ export default function AdminDashboard() {
                 Admin Authentication
               </h2>
               <p className="text-xs text-[#e1bfb8] mt-1 font-['JetBrains_Mono']">
-                Enter your ADMIN_KEY from .env.local
+                Enter admin credentials to access the dashboard
               </p>
             </div>
             <input

@@ -12,7 +12,6 @@ import {
   BadgeCheck,
   Sparkles,
   Bot,
-  Boxes,
   GraduationCap,
   Award,
 } from 'lucide-react';
@@ -24,7 +23,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onOpenResume }: HeroSectionProps) {
-  const statIcons = [Bot, Boxes, GraduationCap, Award];
+  const statIcons = [Sparkles, GraduationCap, Award, Bot];
   const statColors = ['text-[#ff6b4a]', 'text-[#7bd0ff]', 'text-[#56d9d8]', 'text-[#ffb4a3]'];
 
   return (
@@ -90,7 +89,7 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
               <a
                 href="#projects"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium bg-[#ff6b4a] text-[#661000] hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-[#ff6b4a]/15 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full text-sm font-semibold bg-[#ff6b4a] text-[#661000] hover:opacity-90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1d100e] transition-all shadow-lg shadow-[#ff6b4a]/15 cursor-pointer"
               >
                 <Rocket className="w-4 h-4" />
                 <span>View Projects</span>
@@ -98,7 +97,7 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
 
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium border border-[#59413c] text-[#f6ddd8] hover:bg-[#352723] transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full text-sm font-semibold border border-[#59413c] text-[#f6ddd8] hover:bg-[#352723] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffb4a3] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1d100e] transition-colors cursor-pointer"
               >
                 <Mail className="w-4 h-4 text-[#ffb4a3]" />
                 <span>Contact Me</span>
@@ -106,7 +105,7 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
 
               <button
                 onClick={onOpenResume}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium bg-[#2a1c19] border border-[#7bd0ff]/40 text-[#7bd0ff] hover:bg-[#7bd0ff]/10 transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-full text-sm font-semibold bg-[#2a1c19] border border-[#7bd0ff]/40 text-[#7bd0ff] hover:bg-[#7bd0ff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7bd0ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1d100e] transition-colors cursor-pointer"
               >
                 <FileText className="w-4 h-4" />
                 <span>Resume</span>
@@ -116,7 +115,7 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
                 href={PROFILE.contact.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium bg-[#00acab] text-[#003939] hover:opacity-90 transition-opacity cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-full text-sm font-semibold bg-[#00acab] text-[#003939] hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00acab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1d100e] transition-opacity cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>WhatsApp</span>
@@ -130,8 +129,9 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
                 href={PROFILE.contact.github}
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:bg-[#41312e] transition-all"
-                title="GitHub"
+                className="w-11 h-11 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all"
+                title="GitHub Profile (opens in new tab)"
+                aria-label="GitHub Profile"
               >
                 <GithubIcon className="w-4 h-4" />
               </a>
@@ -139,8 +139,9 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
                 href={PROFILE.contact.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#7bd0ff] hover:bg-[#41312e] transition-all"
-                title="LinkedIn"
+                className="w-11 h-11 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#7bd0ff] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7bd0ff] transition-all"
+                title="LinkedIn Profile (opens in new tab)"
+                aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
               </a>
@@ -148,8 +149,9 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
                 href={PROFILE.contact.hackerrank}
                 target="_blank"
                 rel="noreferrer"
-                className="px-3 h-10 rounded-full bg-[#352723] flex items-center gap-1.5 text-xs font-['JetBrains_Mono'] text-[#e1bfb8] hover:text-[#56d9d8] hover:bg-[#41312e] transition-all"
-                title="HackerRank"
+                className="px-3.5 h-11 rounded-full bg-[#352723] flex items-center gap-1.5 text-xs font-['JetBrains_Mono'] text-[#e1bfb8] hover:text-[#56d9d8] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#56d9d8] transition-all"
+                title="HackerRank Profile (opens in new tab)"
+                aria-label="HackerRank Profile"
               >
                 <span className="font-bold text-[#56d9d8]">H</span>
                 <span>HackerRank</span>
@@ -158,8 +160,9 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
                 href={PROFILE.contact.gmailComposeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:bg-[#41312e] transition-all"
-                title="Email via Gmail"
+                className="w-11 h-11 rounded-full bg-[#352723] flex items-center justify-center text-[#e1bfb8] hover:text-[#ff6b4a] hover:bg-[#41312e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all"
+                title="Email via Gmail Compose"
+                aria-label="Email via Gmail Compose"
               >
                 <Mail className="w-4 h-4" />
               </a>
@@ -208,7 +211,12 @@ export default function HeroSection({ onOpenResume }: HeroSectionProps) {
                 <Sparkles className="w-3.5 h-3.5 text-[#ff6b4a]" />
               </div>
 
-              <div className="font-['JetBrains_Mono'] text-xs sm:text-[13px] leading-relaxed overflow-x-auto text-[#f6ddd8] whitespace-pre" aria-label="FastAPI LINKUP API example">
+              <div
+                className="font-['JetBrains_Mono'] text-xs sm:text-[13px] leading-relaxed overflow-x-auto text-[#f6ddd8] whitespace-pre focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ff6b4a] rounded"
+                tabIndex={0}
+                role="region"
+                aria-label="FastAPI LINKUP API example"
+              >
                   <span className="text-[#7bd0ff]">from</span>{' '}
                   <span className="text-[#56d9d8]">fastapi</span>{' '}
                   <span className="text-[#7bd0ff]">import</span> FastAPI, UploadFile{'\n'}

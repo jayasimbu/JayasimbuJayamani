@@ -4,31 +4,21 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SKILL_CATEGORIES } from '@/data/portfolio-data';
 
-function SkillBar({ name, level, delay }: { name: string; level: number; delay: number }) {
+function SkillItem({ name, badge, delay }: { name: string; badge?: string; delay: number }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay, duration: 0.3 }}
-      className="mb-2.5"
+      className="flex justify-between items-center py-1.5 px-2.5 rounded mb-1.5 transition-colors hover:bg-[rgba(0,240,255,0.06)]"
+      style={{ background: 'rgba(0,240,255,0.02)', border: '1px solid rgba(0,240,255,0.06)' }}
     >
-      <div className="flex justify-between items-center mb-1">
-        <span className="font-['JetBrains_Mono'] text-xs text-[#E0E0FF]">{name}</span>
-        <span className="font-['Orbitron'] text-[10px] text-[#00F0FF]">{level}%</span>
-      </div>
-      {/* Bar track */}
-      <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(0,240,255,0.08)' }}>
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${level}%` }}
-          transition={{ delay: delay + 0.1, duration: 0.6, ease: 'easeOut' }}
-          className="h-full rounded-full"
-          style={{
-            background: 'linear-gradient(90deg, rgba(0,240,255,0.5), rgba(0,240,255,0.8))',
-            /* No boxShadow glow, no glowing dot */
-          }}
-        />
-      </div>
+      <span className="font-['JetBrains_Mono'] text-xs text-[#E0E0FF]">{name}</span>
+      {badge && (
+        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[rgba(0,240,255,0.08)] text-[#00F0FF] border border-[rgba(0,240,255,0.15)]">
+          {badge}
+        </span>
+      )}
     </motion.div>
   );
 }
@@ -49,7 +39,7 @@ function RadarChart({ categories }: { categories: typeof SKILL_CATEGORIES }) {
   };
 
   const avgLevels = categories.map(
-    (cat) => cat.skills.reduce((sum, s) => sum + s.level, 0) / cat.skills.length / 100
+    (cat) => cat.skills.reduce((sum, s) => sum + (s.level ?? 85), 0) / cat.skills.length / 100
   );
 
   const dataPath = avgLevels
@@ -237,10 +227,10 @@ export default function StackModule() {
             >
               <div className="px-3 py-2" style={{ background: 'rgba(5,5,16,0.5)' }}>
                 {category.skills.map((skill, i) => (
-                  <SkillBar
+                  <SkillItem
                     key={skill.name}
                     name={skill.name}
-                    level={skill.level}
+                    badge={skill.badge}
                     delay={Math.min(0.05 * i, 0.3)}
                   />
                 ))}

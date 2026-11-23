@@ -23,12 +23,6 @@ export function useWindowManager() {
   const [windows, setWindows] = useState<Record<string, WindowState>>({});
   const [zCounter, setZCounter] = useState(INITIAL_Z_INDEX);
 
-  // Get the next z-index and increment the counter
-  const getNextZ = useCallback(() => {
-    setZCounter((prev) => prev + 1);
-    return zCounter + 1;
-  }, [zCounter]);
-
   // Open a new window or restore a minimized one
   const openWindow = useCallback(
     (id: string, title: string) => {

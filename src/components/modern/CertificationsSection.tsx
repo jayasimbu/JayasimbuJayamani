@@ -64,7 +64,8 @@ export default function CertificationsSection() {
                       href={cert.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-['JetBrains_Mono'] text-[#ff6b4a] hover:text-[#ffb4a3] transition-colors"
+                      aria-label={`View verified credential or profile for ${cert.title} (opens in new tab)`}
+                      className="inline-flex items-center gap-1.5 min-h-[38px] px-2.5 py-1 rounded-lg text-xs font-['JetBrains_Mono'] text-[#ff6b4a] hover:text-[#ffb4a3] hover:bg-[#352723] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-colors"
                     >
                       <span>View Profile</span>
                       <ExternalLink className="w-3.5 h-3.5" />

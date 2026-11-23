@@ -1,4 +1,15 @@
 import { MongoClient, Db } from 'mongodb';
+import { timingSafeEqual } from 'crypto';
+import dns from 'dns';
+
+// Fix Node.js DNS SRV resolution on Windows for mongodb+srv:// URIs
+if (process.platform === 'win32') {
+  try {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+  } catch {
+    // fallback gracefully to default resolver
+  }
+}
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
 const MONGODB_DB = process.env.MONGODB_DB || 'jayasimbu_portfolio';
@@ -28,5 +39,13 @@ export function isAuthorizedAdmin(req: Request): boolean {
   const expectedKey = process.env.ADMIN_KEY;
   if (!expectedKey) return false;
   const providedKey = req.headers.get('x-admin-key') || '';
-  return providedKey === expectedKey;
+  if (providedKey.length !== expectedKey.length) return false;
+  try {
+    return timingSafeEqual(
+      Buffer.from(providedKey, 'utf-8'),
+      Buffer.from(expectedKey, 'utf-8')
+    );
+  } catch {
+    return false;
+  }
 }

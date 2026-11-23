@@ -68,12 +68,12 @@ export default function Navbar({ onOpenResume, isOsMode, onToggleOsMode }: Navba
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Main navigation">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="px-3 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723]/70 transition-all"
+                className="px-3 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all"
               >
                 {link.name}
               </a>
@@ -84,8 +84,9 @@ export default function Navbar({ onOpenResume, isOsMode, onToggleOsMode }: Navba
           <div className="hidden sm:flex items-center gap-2.5">
             <button
               onClick={onToggleOsMode}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] text-[#7bd0ff] border border-[#7bd0ff]/35 hover:border-[#7bd0ff] hover:bg-[#7bd0ff]/10 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] text-[#7bd0ff] border border-[#7bd0ff]/35 hover:border-[#7bd0ff] hover:bg-[#7bd0ff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7bd0ff] transition-all cursor-pointer min-h-[38px]"
               title="Toggle Cyberpunk Desktop OS Mode"
+              aria-label="Toggle Cyberpunk Desktop OS Mode"
             >
               <Monitor className="w-3.5 h-3.5" />
               <span>{isOsMode ? 'Web Mode' : 'OS Mode'}</span>
@@ -93,7 +94,7 @@ export default function Navbar({ onOpenResume, isOsMode, onToggleOsMode }: Navba
 
             <button
               onClick={onOpenResume}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] font-medium text-[#f6ddd8] bg-[#2a1c19] border border-[#59413c] hover:border-[#ffb4a3] transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] font-medium text-[#f6ddd8] bg-[#2a1c19] border border-[#59413c] hover:border-[#ffb4a3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffb4a3] transition-all cursor-pointer min-h-[38px]"
             >
               <FileText className="w-3.5 h-3.5 text-[#ffb4a3]" />
               <span>Resume</span>
@@ -101,7 +102,7 @@ export default function Navbar({ onOpenResume, isOsMode, onToggleOsMode }: Navba
 
             <a
               href="#contact"
-              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] font-semibold text-[#661000] bg-[#ff6b4a] hover:opacity-90 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] font-semibold text-[#661000] bg-[#ff6b4a] hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-all cursor-pointer min-h-[38px]"
             >
               <Mail className="w-3.5 h-3.5" />
               <span>Hire Me</span>
@@ -112,16 +113,18 @@ export default function Navbar({ onOpenResume, isOsMode, onToggleOsMode }: Navba
           <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={onToggleOsMode}
-              className="p-2 rounded-lg text-[#7bd0ff] border border-[#7bd0ff]/30 hover:bg-[#7bd0ff]/10 text-xs sm:hidden cursor-pointer"
+              className="p-2 rounded-lg text-[#7bd0ff] border border-[#7bd0ff]/30 hover:bg-[#7bd0ff]/10 text-xs sm:hidden cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7bd0ff]"
               title="Toggle OS Mode"
+              aria-label="Toggle OS Mode"
             >
               <Monitor className="w-4 h-4" />
             </button>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723] transition-colors cursor-pointer"
-              aria-label="Toggle navigation"
+              className="p-2 rounded-lg text-[#e1bfb8] hover:text-[#f6ddd8] hover:bg-[#352723] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-6 h-6 text-[#ff6b4a]" /> : <Menu className="w-6 h-6" />}
             </button>

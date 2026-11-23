@@ -84,22 +84,26 @@ export default function AIPlaygroundSection() {
             Test-Drive My <span className="gradient-text-primary">AI Capabilities</span>
           </h2>
           <p className="text-sm sm:text-base text-[#e1bfb8] mt-3">
-            Experience interactive simulations of the AI engines behind LINKUP, VLM LLaVA, and MyFitness Hub.
+            Interactive frontend demonstrations showcasing the AI features built into LINKUP, VLM LLaVA, and MyFitness Hub. These simulations illustrate the user experience; the actual AI processing runs on the project backends.
           </p>
         </motion.div>
 
         {/* Tab Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8 max-w-4xl mx-auto">
+        <div role="tablist" aria-label="Interactive AI Demonstrations" className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8 max-w-4xl mx-auto">
           <button
+            role="tab"
+            id="tab-linkup"
+            aria-selected={activeTab === 'linkup'}
+            aria-controls="panel-linkup"
             onClick={() => setActiveTab('linkup')}
-            className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+            className={`p-4 rounded-xl border text-left transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none ${
               activeTab === 'linkup'
                 ? 'bg-[#2a1c19] border-[#ff6b4a] glow-primary text-[#f6ddd8]'
                 : 'bg-[#261815] border-[#59413c]/40 text-[#e1bfb8] hover:border-[#ffb4a3]/60'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-['JetBrains_Mono'] text-[#ff6b4a] font-semibold">SIMULATION 01</span>
+              <span className="text-[10px] font-['JetBrains_Mono'] text-[#ff6b4a] font-semibold">DEMO 01</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ff6b4a]/15 text-[#ff6b4a]">Ollama</span>
             </div>
             <div className="font-['Space_Grotesk'] font-semibold text-sm text-[#f6ddd8]">LINKUP ATS Scanner</div>
@@ -107,15 +111,19 @@ export default function AIPlaygroundSection() {
           </button>
 
           <button
+            role="tab"
+            id="tab-vlm"
+            aria-selected={activeTab === 'vlm'}
+            aria-controls="panel-vlm"
             onClick={() => setActiveTab('vlm')}
-            className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+            className={`p-4 rounded-xl border text-left transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#7bd0ff] focus-visible:outline-none ${
               activeTab === 'vlm'
                 ? 'bg-[#2a1c19] border-[#7bd0ff] glow-secondary text-[#f6ddd8]'
                 : 'bg-[#261815] border-[#59413c]/40 text-[#e1bfb8] hover:border-[#7bd0ff]/60'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-['JetBrains_Mono'] text-[#7bd0ff] font-semibold">SIMULATION 02</span>
+              <span className="text-[10px] font-['JetBrains_Mono'] text-[#7bd0ff] font-semibold">DEMO 02</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#7bd0ff]/15 text-[#7bd0ff]">LLaVA VLM</span>
             </div>
             <div className="font-['Space_Grotesk'] font-semibold text-sm text-[#f6ddd8]">VLM Invoice Scanner</div>
@@ -123,15 +131,19 @@ export default function AIPlaygroundSection() {
           </button>
 
           <button
+            role="tab"
+            id="tab-fitness"
+            aria-selected={activeTab === 'fitness'}
+            aria-controls="panel-fitness"
             onClick={() => setActiveTab('fitness')}
-            className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+            className={`p-4 rounded-xl border text-left transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#56d9d8] focus-visible:outline-none ${
               activeTab === 'fitness'
                 ? 'bg-[#2a1c19] border-[#56d9d8] glow-tertiary text-[#f6ddd8]'
                 : 'bg-[#261815] border-[#59413c]/40 text-[#e1bfb8] hover:border-[#56d9d8]/60'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-['JetBrains_Mono'] text-[#56d9d8] font-semibold">SIMULATION 03</span>
+              <span className="text-[10px] font-['JetBrains_Mono'] text-[#56d9d8] font-semibold">DEMO 03</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#56d9d8]/15 text-[#56d9d8]">Gemini AI</span>
             </div>
             <div className="font-['Space_Grotesk'] font-semibold text-sm text-[#f6ddd8]">MyFitness Routine Generator</div>
@@ -144,6 +156,9 @@ export default function AIPlaygroundSection() {
           {activeTab === 'linkup' && (
             <motion.div
               key="linkup"
+              role="tabpanel"
+              id="panel-linkup"
+              aria-labelledby="tab-linkup"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
@@ -166,25 +181,27 @@ export default function AIPlaygroundSection() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
+                  <label htmlFor="candidate-resume-skills" className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
                     Candidate Resume Skills &amp; Profile
                   </label>
                   <textarea
+                    id="candidate-resume-skills"
                     rows={4}
                     value={resumeText}
                     onChange={(e) => setResumeText(e.target.value)}
-                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#ff6b4a] resize-none"
+                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] resize-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
+                  <label htmlFor="job-description-reqs" className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
                     Job Description (Requirements)
                   </label>
                   <textarea
+                    id="job-description-reqs"
                     rows={4}
                     value={jobText}
                     onChange={(e) => setJobText(e.target.value)}
-                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#ff6b4a] resize-none"
+                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] resize-none"
                   />
                 </div>
               </div>
@@ -193,7 +210,7 @@ export default function AIPlaygroundSection() {
                 <button
                   onClick={handleRunAts}
                   disabled={scanningAts}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-['JetBrains_Mono'] font-semibold text-[#661000] bg-[#ff6b4a] hover:opacity-90 transition-opacity cursor-pointer"
+                  className="flex items-center gap-2 min-h-[42px] px-5 py-2.5 rounded-full text-xs font-['JetBrains_Mono'] font-semibold text-[#661000] bg-[#ff6b4a] hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-opacity cursor-pointer"
                 >
                   <Zap className="w-4 h-4" />
                   <span>{scanningAts ? 'Calculating ATS Embeddings...' : 'Run Ollama ATS Analysis'}</span>
@@ -233,6 +250,9 @@ export default function AIPlaygroundSection() {
           {activeTab === 'vlm' && (
             <motion.div
               key="vlm"
+              role="tabpanel"
+              id="panel-vlm"
+              aria-labelledby="tab-vlm"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
@@ -294,19 +314,19 @@ export default function AIPlaygroundSection() {
                   <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() => handleAskVlm('What is the total tax amount?')}
-                      className="px-3 py-1.5 rounded-full bg-[#352723] text-xs font-['JetBrains_Mono'] text-[#7bd0ff] hover:bg-[#41312e] transition-colors cursor-pointer"
+                      className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#352723] text-xs font-['JetBrains_Mono'] text-[#7bd0ff] hover:bg-[#41312e] focus-visible:ring-2 focus-visible:ring-[#7bd0ff] focus-visible:outline-none transition-colors cursor-pointer"
                     >
                       &quot;What is the total tax?&quot;
                     </button>
                     <button
                       onClick={() => handleAskVlm('Who is the vendor?')}
-                      className="px-3 py-1.5 rounded-full bg-[#352723] text-xs font-['JetBrains_Mono'] text-[#7bd0ff] hover:bg-[#41312e] transition-colors cursor-pointer"
+                      className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#352723] text-xs font-['JetBrains_Mono'] text-[#7bd0ff] hover:bg-[#41312e] focus-visible:ring-2 focus-visible:ring-[#7bd0ff] focus-visible:outline-none transition-colors cursor-pointer"
                     >
                       &quot;Who is the vendor?&quot;
                     </button>
                     <button
                       onClick={() => handleAskVlm('What item was purchased?')}
-                      className="px-3 py-1.5 rounded-full bg-[#352723] text-xs font-['JetBrains_Mono'] text-[#7bd0ff] hover:bg-[#41312e] transition-colors cursor-pointer"
+                      className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#352723] text-xs font-['JetBrains_Mono'] text-[#7bd0ff] hover:bg-[#41312e] focus-visible:ring-2 focus-visible:ring-[#7bd0ff] focus-visible:outline-none transition-colors cursor-pointer"
                     >
                       &quot;What item was purchased?&quot;
                     </button>
@@ -324,6 +344,9 @@ export default function AIPlaygroundSection() {
           {activeTab === 'fitness' && (
             <motion.div
               key="fitness"
+              role="tabpanel"
+              id="panel-fitness"
+              aria-labelledby="tab-fitness"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
@@ -346,13 +369,14 @@ export default function AIPlaygroundSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
+                  <label htmlFor="fitness-goal-select" className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
                     Primary Fitness Goal
                   </label>
                   <select
+                    id="fitness-goal-select"
                     value={fitGoal}
                     onChange={(e) => setFitGoal(e.target.value)}
-                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#56d9d8]"
+                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#56d9d8] focus-visible:ring-2 focus-visible:ring-[#56d9d8]"
                   >
                     <option value="Hypertrophy (Muscle Gain)">Hypertrophy (Muscle Gain)</option>
                     <option value="Fat Loss & Conditioning">Fat Loss &amp; Conditioning</option>
@@ -360,13 +384,14 @@ export default function AIPlaygroundSection() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
+                  <label htmlFor="fitness-split-select" className="block text-xs font-['JetBrains_Mono'] text-[#e1bfb8] mb-1.5">
                     Weekly Training Split
                   </label>
                   <select
+                    id="fitness-split-select"
                     value={fitFreq}
                     onChange={(e) => setFitFreq(e.target.value)}
-                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#56d9d8]"
+                    className="w-full p-3 rounded-lg bg-[#261815] border border-[#59413c]/40 text-xs text-[#f6ddd8] font-['JetBrains_Mono'] focus:outline-none focus:border-[#56d9d8] focus-visible:ring-2 focus-visible:ring-[#56d9d8]"
                   >
                     <option value="4 Days (Upper / Lower Split)">4 Days (Upper / Lower Split)</option>
                     <option value="5 Days (Push / Pull / Legs)">5 Days (Push / Pull / Legs)</option>
@@ -378,7 +403,7 @@ export default function AIPlaygroundSection() {
               <button
                 onClick={handleGenerateFitness}
                 disabled={fitGenerating}
-                className="w-full py-3 rounded-full font-['JetBrains_Mono'] text-xs font-semibold text-[#003939] bg-[#00acab] hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center gap-2"
+                className="w-full min-h-[44px] py-3 rounded-full font-['JetBrains_Mono'] text-xs font-semibold text-[#003939] bg-[#00acab] hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[#00acab] focus-visible:outline-none transition-opacity cursor-pointer flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>{fitGenerating ? 'Synthesizing routine with Gemini...' : 'Generate Custom AI Workout Plan'}</span>

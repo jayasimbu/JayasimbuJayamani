@@ -100,7 +100,8 @@ export default function ServicesSection() {
                   </div>
                   <a
                     href="#contact"
-                    className="inline-flex items-center gap-1 text-xs font-['JetBrains_Mono'] text-[#ff6b4a] hover:text-[#ffb4a3] transition-colors shrink-0"
+                    aria-label={`Inquire about ${service.title}`}
+                    className="inline-flex items-center gap-1 min-h-[40px] px-3 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] text-[#ff6b4a] hover:text-[#ffb4a3] hover:bg-[#352723] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-colors shrink-0"
                   >
                     <span>Inquire</span>
                     <ArrowRight className="w-3.5 h-3.5" />

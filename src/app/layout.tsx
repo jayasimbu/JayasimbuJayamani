@@ -23,11 +23,27 @@ export const metadata: Metadata = {
     "Web Developer Portfolio",
   ],
   authors: [{ name: "Jayasimbu Jayamani" }],
+  metadataBase: new URL("https://jayasimbujayamani.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Jayasimbu Jayamani — Full Stack Developer | AI Application Developer",
     description:
       "Building Modern Web Applications & AI-Powered Solutions. Explore full-stack and AI projects by Jayasimbu Jayamani.",
     type: "website",
+    url: "https://jayasimbujayamani.vercel.app",
+    siteName: "Jayasimbu Jayamani Portfolio",
+  },
+  twitter: {
+    card: "summary",
+    title: "Jayasimbu Jayamani — Full Stack Developer | AI Application Developer",
+    description:
+      "Building Modern Web Applications & AI-Powered Solutions.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -41,6 +57,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
           rel="stylesheet"

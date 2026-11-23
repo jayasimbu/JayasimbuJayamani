@@ -59,7 +59,8 @@ export default function Footer() {
                 href={PROFILE.contact.github}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-xl bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#ff6b4a] text-[#e1bfb8] hover:text-[#ff6b4a] transition-all"
+                aria-label="GitHub Profile (opens in new tab)"
+                className="w-10 h-10 rounded-xl bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none text-[#e1bfb8] hover:text-[#ff6b4a] flex items-center justify-center transition-all"
                 title="GitHub"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -68,7 +69,8 @@ export default function Footer() {
                 href={PROFILE.contact.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-xl bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#7bd0ff] text-[#e1bfb8] hover:text-[#7bd0ff] transition-all"
+                aria-label="LinkedIn Profile (opens in new tab)"
+                className="w-10 h-10 rounded-xl bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#7bd0ff] focus-visible:ring-2 focus-visible:ring-[#7bd0ff] focus-visible:outline-none text-[#e1bfb8] hover:text-[#7bd0ff] flex items-center justify-center transition-all"
                 title="LinkedIn"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -77,7 +79,8 @@ export default function Footer() {
                 href={PROFILE.contact.gmailComposeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-xl bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#ff6b4a] text-[#e1bfb8] hover:text-[#ff6b4a] transition-all"
+                aria-label="Send email via Gmail (opens in new tab)"
+                className="w-10 h-10 rounded-xl bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none text-[#e1bfb8] hover:text-[#ff6b4a] flex items-center justify-center transition-all"
                 title="Email via Gmail"
               >
                 <Mail className="w-4 h-4" />
@@ -86,7 +89,8 @@ export default function Footer() {
                 href={PROFILE.contact.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-xl bg-[#2a1c19] border border-[#56d9d8]/30 hover:border-[#56d9d8] text-[#56d9d8] transition-all"
+                aria-label="Chat on WhatsApp (opens in new tab)"
+                className="w-10 h-10 rounded-xl bg-[#2a1c19] border border-[#56d9d8]/30 hover:border-[#56d9d8] focus-visible:ring-2 focus-visible:ring-[#56d9d8] focus-visible:outline-none text-[#56d9d8] flex items-center justify-center transition-all"
                 title="WhatsApp"
               >
                 <Phone className="w-4 h-4" />
@@ -94,7 +98,7 @@ export default function Footer() {
             </div>
             <button
               onClick={scrollToTop}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] text-[#ffb4a3] bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#ff6b4a] transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 min-h-[38px] px-3.5 py-1.5 rounded-full text-xs font-['JetBrains_Mono'] text-[#ffb4a3] bg-[#2a1c19] border border-[#59413c]/40 hover:border-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-all cursor-pointer"
             >
               <ArrowUp className="w-3.5 h-3.5" />
               <span>Back to Top</span>
