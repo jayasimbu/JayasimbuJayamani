@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ensurePortfolioSeeded } from '@/lib/seed';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+const NO_CACHE_HEADERS = {
+  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+  'Pragma': 'no-cache',
+  'Expires': '0',
+};
+
 export async function GET() {
   try {
     const db = await getDb();
@@ -13,7 +22,10 @@ export async function GET() {
         ok: true,
         database: 'connected',
       },
-      { status: 200 }
+      {
+        status: 200,
+        headers: NO_CACHE_HEADERS,
+      }
     );
   } catch (error) {
     // Keep internal diagnostics exclusively in server-side logs
@@ -27,7 +39,10 @@ export async function GET() {
         ok: false,
         database: 'unavailable',
       },
-      { status: 503 }
+      {
+        status: 503,
+        headers: NO_CACHE_HEADERS,
+      }
     );
   }
 }
