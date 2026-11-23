@@ -11,7 +11,6 @@ if (process.platform === 'win32') {
   }
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
 const MONGODB_DB = process.env.MONGODB_DB || 'jayasimbu_portfolio';
 
 interface GlobalWithMongo {
@@ -21,11 +20,21 @@ interface GlobalWithMongo {
 const globalWithMongo = globalThis as typeof globalThis & GlobalWithMongo;
 
 function getClientPromise(): Promise<MongoClient> {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error('MONGODB_URI environment variable is not defined.');
+  }
+
   if (!globalWithMongo._mongoClientPromise) {
-    const client = new MongoClient(MONGODB_URI, {
+    const client = new MongoClient(uri, {
       serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 10000,
+      maxPoolSize: 10,
     });
-    globalWithMongo._mongoClientPromise = client.connect();
+    globalWithMongo._mongoClientPromise = client.connect().catch((err) => {
+      delete globalWithMongo._mongoClientPromise;
+      throw err;
+    });
   }
   return globalWithMongo._mongoClientPromise;
 }

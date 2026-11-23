@@ -2,7 +2,30 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ensurePortfolioSeeded } from '@/lib/seed';
 
+function getSafeEnvInfo() {
+  const uri = process.env.MONGODB_URI || '';
+  let protocol = '';
+  let host = '';
+  if (uri) {
+    try {
+      const parsed = new URL(uri);
+      protocol = parsed.protocol;
+      host = parsed.hostname;
+    } catch {
+      protocol = 'unparseable';
+    }
+  }
+  return {
+    hasMongoUri: Boolean(process.env.MONGODB_URI),
+    hasMongoDb: Boolean(process.env.MONGODB_DB),
+    hasAdminKey: Boolean(process.env.ADMIN_KEY),
+    protocol: protocol || undefined,
+    host: host || undefined,
+  };
+}
+
 export async function GET() {
+  const env = getSafeEnvInfo();
   try {
     const db = await getDb();
     await db.command({ ping: 1 });
@@ -17,11 +40,12 @@ export async function GET() {
 
     return NextResponse.json({
       ok: true,
+      env,
       database: db.databaseName,
       counts: { projects, skillCategories, experiences, inquiries },
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Database connection error';
-    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+    return NextResponse.json({ ok: false, error: message, env }, { status: 500 });
   }
 }
