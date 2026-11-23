@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+export const dynamic = 'force-dynamic';
+
 interface ContactPayload {
   name?: string;
   email?: string;
@@ -21,16 +23,23 @@ export async function POST(req: Request) {
     const subject = body.subject?.trim().slice(0, MAX_SUBJECT_LENGTH) || 'General Inquiry';
     const message = body.message?.trim().slice(0, MAX_MESSAGE_LENGTH) || '';
 
-    if (!name || !email || !message) {
+    if (!name || name.length < 2) {
       return NextResponse.json(
-        { ok: false, error: 'Name, email, and message are required.' },
+        { ok: false, error: 'Please enter your name (at least 2 characters).' },
         { status: 400 }
       );
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { ok: false, error: 'Please provide a valid email address.' },
+        { status: 400 }
+      );
+    }
+
+    if (!message || message.length < 5) {
+      return NextResponse.json(
+        { ok: false, error: 'Please enter a message (at least 5 characters).' },
         { status: 400 }
       );
     }
@@ -47,6 +56,10 @@ export async function POST(req: Request) {
 
     const result = await db.collection('inquiries').insertOne(doc);
 
+    if (!result.acknowledged || !result.insertedId) {
+      throw new Error('Database insert was not acknowledged by MongoDB.');
+    }
+
     return NextResponse.json(
       {
         ok: true,
@@ -56,7 +69,13 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Failed to save inquiry';
-    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+    console.error('Failed to save contact inquiry to MongoDB:', error);
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Unable to save your inquiry right now. Please try again or reach out directly via email.',
+      },
+      { status: 500 }
+    );
   }
 }

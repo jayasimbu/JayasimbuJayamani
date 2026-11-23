@@ -32,7 +32,7 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [sentStatus, setSentStatus] = useState<{
-    type: 'success' | 'gmail';
+    type: 'success' | 'error';
     text: string;
     gmailUrl?: string;
   } | null>(null);
@@ -45,11 +45,35 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
+    if (submitting || submitted) {
       return;
     }
 
-    if (submitting || submitted) {
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedName || trimmedName.length < 2) {
+      setSentStatus({
+        type: 'error',
+        text: 'Please enter your name (at least 2 characters).',
+      });
+      return;
+    }
+
+    if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setSentStatus({
+        type: 'error',
+        text: 'Please provide a valid email address.',
+      });
+      return;
+    }
+
+    if (!trimmedMessage || trimmedMessage.length < 5) {
+      setSentStatus({
+        type: 'error',
+        text: 'Please enter a message (at least 5 characters).',
+      });
       return;
     }
 
@@ -60,17 +84,22 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          subject: formData.subject,
+          message: trimmedMessage,
+        }),
       });
       const data = await res.json();
 
       if (!res.ok || !data.ok) {
-        throw new Error(data.error || 'Could not save inquiry');
+        throw new Error(data.error || 'Failed to save inquiry.');
       }
 
       setSentStatus({
         type: 'success',
-        text: 'Message sent successfully! Jayasimbu will review your inquiry soon.',
+        text: data.message || 'Inquiry saved successfully. Jayasimbu will review your message soon.',
       });
       setSubmitted(true);
       setFormData({
@@ -79,16 +108,17 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
         subject: 'Full Stack Web Development',
         message: '',
       });
-    } catch {
-      const emailSubject = encodeURIComponent(`[Portfolio Inquiry] ${formData.subject} - ${formData.name}`);
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to save inquiry.';
+      const emailSubject = encodeURIComponent(`[Portfolio Inquiry] ${formData.subject} - ${trimmedName}`);
       const emailBody = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        `Name: ${trimmedName}\nEmail: ${trimmedEmail}\n\nMessage:\n${trimmedMessage}`
       );
       const gmailUrl = `${PROFILE.contact.gmailComposeUrl}&su=${emailSubject}&body=${emailBody}`;
-      window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+
       setSentStatus({
-        type: 'gmail',
-        text: 'Opened Gmail compose in a new tab so you can send without Outlook.',
+        type: 'error',
+        text: errorMsg,
         gmailUrl,
       });
     } finally {
@@ -283,10 +313,11 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
                   id="name"
                   required
                   aria-required="true"
+                  disabled={submitting || submitted}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Alex Sharma"
-                  className="w-full min-h-[44px] px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm placeholder:text-[#a88a83] focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-colors"
+                  className="w-full min-h-[44px] px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm placeholder:text-[#a88a83] focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
                 />
               </div>
 
@@ -302,10 +333,11 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
                   id="email"
                   required
                   aria-required="true"
+                  disabled={submitting || submitted}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="alex@example.com"
-                  className="w-full min-h-[44px] px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm placeholder:text-[#a88a83] focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-colors"
+                  className="w-full min-h-[44px] px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm placeholder:text-[#a88a83] focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
                 />
               </div>
 
@@ -318,9 +350,10 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
                 </label>
                 <select
                   id="subject"
+                  disabled={submitting || submitted}
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full min-h-[44px] px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-colors"
+                  className="w-full min-h-[44px] px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
                 >
                   <option value="Full Stack Web Development">Full Stack Web Development</option>
                   <option value="Entry-Level Job / Internship Opportunity">Entry-Level Job / Internship Opportunity</option>
@@ -342,18 +375,19 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
                   id="message"
                   required
                   aria-required="true"
+                  disabled={submitting || submitted}
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell me about your project, timeline, or open role..."
-                  className="w-full px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm placeholder:text-[#a88a83] focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-[#261815] border border-[#59413c]/40 rounded-lg text-[#f6ddd8] text-sm placeholder:text-[#a88a83] focus:outline-none focus:border-[#ff6b4a] focus:ring-1 focus:ring-[#ff6b4a] focus-visible:ring-2 focus-visible:ring-[#ff6b4a] disabled:opacity-60 disabled:cursor-not-allowed transition-colors resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting || submitted}
-                className="w-full min-h-[48px] flex items-center justify-center gap-2 px-6 py-3.5 bg-[#ff6b4a] text-[#661000] rounded-full font-semibold hover:opacity-90 disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-opacity text-sm cursor-pointer"
+                className="w-full min-h-[48px] flex items-center justify-center gap-2 px-6 py-3.5 bg-[#ff6b4a] text-[#661000] rounded-full font-semibold hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-[#ff6b4a] focus-visible:outline-none transition-opacity text-sm cursor-pointer"
               >
                 {submitting ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -364,18 +398,39 @@ export default function ContactSection({ onOpenResume }: ContactSectionProps) {
               </button>
 
               {sentStatus && (
-                <div className="text-xs font-['JetBrains_Mono'] text-center pt-1 text-[#56d9d8] space-y-2">
-                  <p>{sentStatus.text}</p>
-                  {sentStatus.gmailUrl && (
-                    <a
-                      href={sentStatus.gmailUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-[#ff6b4a] underline"
+                <div
+                  className={`text-xs font-['JetBrains_Mono'] text-center p-3.5 rounded-xl border transition-all ${
+                    sentStatus.type === 'success'
+                      ? 'bg-[#56d9d8]/10 border-[#56d9d8]/30 text-[#56d9d8]'
+                      : 'bg-[#ff6b4a]/10 border-[#ff6b4a]/30 text-[#ff6b4a]'
+                  }`}
+                  role={sentStatus.type === 'error' ? 'alert' : 'status'}
+                >
+                  <p className="font-medium leading-relaxed">{sentStatus.text}</p>
+                  {submitted && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setSentStatus(null);
+                      }}
+                      className="text-[11px] text-[#e1bfb8] hover:text-[#56d9d8] underline transition-colors cursor-pointer pt-2 block mx-auto"
                     >
-                      <span>Open Gmail Compose</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                      Send another message
+                    </button>
+                  )}
+                  {sentStatus.gmailUrl && sentStatus.type === 'error' && (
+                    <div className="pt-2">
+                      <a
+                        href={sentStatus.gmailUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs text-[#f6ddd8] hover:text-[#ff6b4a] underline"
+                      >
+                        <span>Send via Gmail Web Compose instead</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
                   )}
                 </div>
               )}
